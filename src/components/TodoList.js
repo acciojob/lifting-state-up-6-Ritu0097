@@ -1,21 +1,61 @@
-import React from 'react';
-function TodoList({ todos, handleComplete }) {
-  const handleClick = (id) => {
-    handleComplete(id);
+
+import React, { useState } from "react";
+
+const TodoList = () => {
+  const [todos, setTodos] = useState([
+    {
+      id: 1,
+      title: "Learn React",
+    },
+    {
+      id: 2,
+      title: "Build React App",
+    },
+    {
+      id: 3,
+      title: "Deploy React App",
+    },
+  ]);
+
+  const handleCompleteTodo = (todoId) => {
+    setTodos((prevTodos) =>
+      prevTodos.map((todo) => {
+        if (todo.id === todoId) {
+          return { ...todo, completed: true };
+        }
+        return todo;
+      })
+    );
   };
 
   return (
-    <ul>
-      {todos.map(todo => (
-        <li key={todo.id}>
-          {todo.text}{' '}
-          {!todo.completed && (
-            <button onClick={() => handleClick(todo.id)}>Complete</button>
-          )}
-        </li>
-      ))}
-    </ul>
+    <div className="parent">
+      <h1>Parent Component</h1>
+      <Child todos={todos} handleCompleteTodo={handleCompleteTodo} />
+    </div>
   );
-}
+};
 
-export default TodoList;
+const Child = ({ todos, handleCompleteTodo }) => {
+  return (
+    <div className="child">
+      <h2>Child Component</h2>
+      {todos.map((todo) => (
+        <div key={todo.id} className="todo">
+          <ul>
+            <li>
+              <span>{todo.title}</span>
+              {!todo.completed && (
+                <button onClick={() => handleCompleteTodo(todo.id)}>
+                  Complete
+                </button>
+              )}
+            </li>
+          </ul>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default Parent;
