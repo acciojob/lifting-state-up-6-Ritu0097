@@ -1,61 +1,24 @@
+import React from 'react';
+import { render, fireEvent, screen } from '@testing-library/react';
+import TodoList from './TodoList';
 
-import React, { useState } from "react";
+describe('TodoList Component', () => {
+  let handleCompleteMock;
+  let todos;
 
-const TodoList = () => {
-  const [todos, setTodos] = useState([
-    {
-      id: 1,
-      title: "Learn React",
-    },
-    {
-      id: 2,
-      title: "Build React App",
-    },
-    {
-      id: 3,
-      title: "Deploy React App",
-    },
-  ]);
+  beforeEach(() => {
+    handleCompleteMock = jest.fn();
+    todos = [
+      { id: 1, text: 'Learn React', completed: false },
+      { id: 2, text: 'Build a todo app', completed: false }
+    ];
+  });
 
-  const handleCompleteTodo = (todoId) => {
-    setTodos((prevTodos) =>
-      prevTodos.map((todo) => {
-        if (todo.id === todoId) {
-          return { ...todo, completed: true };
-        }
-        return todo;
-      })
-    );
-  };
+  test('should mark a todo as completed when the complete button is clicked', () => {
+    render(<TodoList todos={todos} handleComplete={handleCompleteMock} />);
 
-  return (
-    <div className="parent">
-      <h1>Parent Component</h1>
-      <Child todos={todos} handleCompleteTodo={handleCompleteTodo} />
-    </div>
-  );
-};
+    fireEvent.click(screen.getByText('Complete', { exact: false }));
 
-const Child = ({ todos, handleCompleteTodo }) => {
-  return (
-    <div className="child">
-      <h2>Child Component</h2>
-      {todos.map((todo) => (
-        <div key={todo.id} className="todo">
-          <ul>
-            <li>
-              <span>{todo.title}</span>
-              {!todo.completed && (
-                <button onClick={() => handleCompleteTodo(todo.id)}>
-                  Complete
-                </button>
-              )}
-            </li>
-          </ul>
-        </div>
-      ))}
-    </div>
-  );
-};
-
-export default Parent;
+    expect(handleCompleteMock).toHaveBeenCalledTimes(1);
+  });
+});
