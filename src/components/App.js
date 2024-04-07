@@ -18,7 +18,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Todo List</h1>
+      <h1>Parent Component</h1>
       <TodoList todos={todos} handleComplete={handleComplete} />
     </div>
   );
