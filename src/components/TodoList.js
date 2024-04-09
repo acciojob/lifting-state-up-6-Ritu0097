@@ -1,8 +1,6 @@
 import React from 'react';
 
 function TodoList({ todos, handleComplete }) {
-  <>
-  <h2>Child Component</h2>
   return (
     <ul>
       {todos.map(todo => (
@@ -15,7 +13,6 @@ function TodoList({ todos, handleComplete }) {
       ))}
     </ul>
   );
-  </>
 }
 
 export default TodoList;
