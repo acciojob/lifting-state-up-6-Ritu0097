@@ -15,11 +15,7 @@ const TodoList = ({ todos, handleComplete }) => {
         >
           <span>{todo.text}</span>
           {!todo.completed && (
-            <input
-              type="button"
-              value="Complete"
-              onClick={() => handleComplete(todo.id)}
-            />
+            <button onClick={() => handleComplete(todo.id)}>Complete</button>
           )}
         </li>
       ))}
