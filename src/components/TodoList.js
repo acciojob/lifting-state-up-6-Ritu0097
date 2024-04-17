@@ -8,11 +8,18 @@ const TodoList = ({ todos, handleComplete }) => {
           key={todo.id}
           style={{
             textDecoration: todo.completed ? 'line-through' : 'none',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
           }}
         >
-          {todo.text}
+          <span>{todo.text}</span>
           {!todo.completed && (
-            <button onClick={() => handleComplete(todo.id)}>Complete</button>
+            <input
+              type="button"
+              value="Complete"
+              onClick={() => handleComplete(todo.id)}
+            />
           )}
         </li>
       ))}
